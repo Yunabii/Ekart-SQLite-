@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h3 class="text-center mb-4">📦 My Orders</h3>
+
+    {% if orders|length == 0 %}
+
+        <div class="text-center mt-5">
+            <p>You have not placed any orders yet.</p>
+            <a href="/user/products" class="btn btn-dark">
+                Shop Now
+            </a>
+        </div>
+
+    {% else %}
+
+        <div class="row">
+
+            {% for order in orders %}
+            <div class="col-md-6 col-lg-4 mb-4">
+
+                <div class="order-card h-100">
+
+                    <h5 class="mb-2">Order #{{ order.order_id }}</h5>
+
+                    <p><strong>Amount:</strong> ₹{{ order.amount }}</p>
+
+                    <p>
+                        <strong>Status:</strong> 
+                        <span class="badge bg-success">
+                            {{ order.payment_status }}
+                        </span>
+                    </p>
+
+                    <p class="text-muted small">
+                        {{ order.created_at }}
+                    </p>
+
+                    <div class="d-flex gap-2 mt-3">
+
+                        <a href="/user/order-success/{{ order.order_id }}"
+                           class="btn btn-outline-dark btn-sm w-100">
+                            View
+                        </a>
+
+                        <a href="/user/download-invoice/{{ order.order_id }}"
+                           class="btn btn-dark btn-sm w-100">
+                            Invoice
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+            {% endfor %}
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

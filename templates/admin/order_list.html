@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5 pb-4">
+
+    <h4 class="mb-4 fw-bold">📦 All Customer Orders</h4>
+
+    <!-- FLASH FIX -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body">
+
+            {% if orders %}
+            <div class="table-responsive">
+                <table class="table align-middle text-center text-md-start">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Payment</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in orders %}
+                        <tr>
+                            <td>#{{ order.order_id }}</td>
+                            <td>{{ order.username or 'User' }}</td>
+                            <td class="fw-bold text-success">₹{{ order.amount }}</td>
+                            <td>
+                                <span class="badge bg-info text-dark">
+                                    {{ order.payment_status }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-success">
+                                    {{ order.order_status }}
+                                </span>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    {{ order.created_at }}
+                                </small>
+                            </td>
+                            <td>
+                                <a href="/admin/order/{{ order.order_id }}"
+                                   class="btn btn-sm btn-outline-primary">
+                                    View
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+            {% else %}
+                <div class="text-center py-5">
+                    <h5 class="text-muted">😔 No Orders Found</h5>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

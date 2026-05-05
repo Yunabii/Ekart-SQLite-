@@ -1,0 +1,53 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+
+    <div class="card shadow p-4" style="width:100%; max-width:400px; border-radius:15px;">
+
+        <h4 class="text-center mb-3">🔐 Admin Verify OTP</h4>
+
+        <p class="text-center text-muted" style="font-size:14px;">
+            Enter the OTP sent to admin email
+        </p>
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-danger py-2 text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST">
+
+            <div class="mb-3">
+                <input type="text" name="otp"
+                       class="form-control text-center"
+                       placeholder="Enter OTP"
+                       maxlength="6"
+                       required>
+            </div>
+
+            <button class="btn w-100"
+                    style="background:#f8a5c2; color:white;">
+                Verify OTP
+            </button>
+
+        </form>
+
+        <div class="text-center mt-3">
+            <a href="/admin-resend-otp" class="text-decoration-none">Resend OTP</a>
+        </div>
+
+        <div class="text-center mt-3">
+            <a href="/admin-login" class="text-decoration-none">Back to Login</a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

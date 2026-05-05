@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4" style="max-width:700px;">
+
+    <h3 class="mb-3">Product Details</h3>
+
+    <div class="card p-4 shadow-sm" style="border-radius:15px;">
+
+        <!-- PRODUCT IMAGE -->
+        <div class="text-center mb-4">
+            <img src="/static/uploads/product_images/{{ product.image }}"
+                 style="width:200px; height:200px; object-fit:cover; border-radius:12px;">
+        </div>
+
+        <!-- PRODUCT INFO -->
+        <div class="mb-2">
+            <strong>Name:</strong> {{ product.name }}
+        </div>
+
+        <div class="mb-2">
+            <strong>Description:</strong> {{ product.description }}
+        </div>
+
+        <div class="mb-2">
+            <strong>Category:</strong> {{ product.category }}
+        </div>
+
+        <div class="mb-3">
+            <strong>Price:</strong> ₹{{ product.price }}
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="d-flex justify-content-between">
+            <a href="/admin/item-list" class="btn btn-outline-secondary">Back</a>
+            <a href="/admin/update-item/{{ product.product_id }}" class="btn btn-primary">
+                Edit Product
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

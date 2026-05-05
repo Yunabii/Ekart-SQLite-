@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <!-- PROFILE CARD -->
+    <div class="card shadow-sm p-4 mx-auto admin-profile-card">
+
+        <h4 class="text-center mb-4">Admin Profile</h4>
+
+        <!-- FLASH -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-success text-center py-2">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endwith %}
+
+        <!-- PROFILE IMAGE -->
+        <div class="text-center mb-3">
+            {% if admin.profile_image %}
+                <img src="/static/uploads/admin_profiles/{{ admin.profile_image }}"
+                     class="admin-profile-img">
+            {% else %}
+                <div class="admin-profile-placeholder">👤</div>
+            {% endif %}
+        </div>
+
+        <!-- FORM -->
+        <form method="POST" action="/admin/profile" enctype="multipart/form-data">
+
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" name="name" value="{{ admin.name }}"
+                       class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" value="{{ admin.email }}"
+                       class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" name="password"
+                       class="form-control" placeholder="Leave blank if no change">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Update Profile Image</label>
+                <input type="file" name="profile_image" class="form-control">
+            </div>
+
+            <button class="btn btn-dark w-100">Update Profile</button>
+
+        </form>
+
+        <!-- BACK BUTTON -->
+        <div class="text-center mt-3">
+            <a href="/admin-dashboard" class="btn btn-outline-dark w-100">
+                Back to Dashboard
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

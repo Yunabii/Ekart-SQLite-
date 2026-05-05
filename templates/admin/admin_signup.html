@@ -1,0 +1,30 @@
+<!-- ================= ADMIN SIGNUP TEMPLATE ================= -->
+{% extends 'auth_base.html' %}
+
+{% block content %}
+
+<div class="login-card">
+
+    <h4 class="text-center mb-3">🛠 Admin Signup</h4>
+
+    {% for msg in get_flashed_messages() %}
+        <p class="text-danger text-center">{{ msg }}</p>
+    {% endfor %}
+
+    <form method="POST">
+
+        <input type="text" name="name" class="form-control mb-3" placeholder="Full Name" required>
+
+        <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
+
+        <button class="btn btn-dark w-100">Send OTP</button>
+
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="/admin-login">Back to Login</a>
+    </div>
+
+</div>
+
+{% endblock %}

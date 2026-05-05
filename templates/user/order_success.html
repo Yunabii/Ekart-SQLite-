@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5 pb-4">
+
+    <div class="bg-white p-4 rounded shadow-sm text-center">
+
+        <h2 class="text-success">🎉 Your Order is Confirmed!</h2>
+        <p>Thank you for shopping with <strong>SmartCart</strong>.</p>
+
+        <div class="text-start mt-4">
+
+            <p><strong>Order ID:</strong> {{ order.order_id }}</p>
+
+            <p><strong>Payment ID:</strong>
+                {% if order.razorpay_payment_id %}
+                    {{ order.razorpay_payment_id }}
+                {% else %}
+                    COD
+                {% endif %}
+            </p>
+
+            <p><strong>Amount Paid:</strong> ₹{{ order.amount }}</p>
+
+            <p><strong>Order Date:</strong> {{ order.created_at }}</p>
+
+        </div>
+
+        <div class="mt-4 text-start">
+
+            <h5>Order Summary</h5>
+
+            <table class="table table-bordered mt-2">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Price (₹)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for it in items %}
+                    <tr>
+                        <td>{{ it.product_name }}</td>
+                        <td>{{ it.quantity }}</td>
+                        <td>{{ it.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="mt-4 d-flex justify-content-center gap-2 flex-wrap">
+
+            <a href="/user/products" class="btn btn-primary">
+                Continue Shopping
+            </a>
+
+            <a href="/user/my-orders" class="btn btn-dark">
+                View My Orders
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+<div class="login-card">
+
+    <h4 class="text-center mb-3">Verify OTP</h4>
+
+    {% for msg in get_flashed_messages() %}
+        <p class="text-danger text-center">{{ msg }}</p>
+    {% endfor %}
+
+    <form method="POST">
+
+        <input type="text" name="otp" class="form-control mb-3 text-center"
+               placeholder="Enter OTP" maxlength="6" required>
+
+        <button class="btn btn-dark w-100">Verify</button>
+
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="/user-login">Back to login</a>
+    </div>
+
+</div>
+{% endblock %}

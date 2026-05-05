@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- PROFILE HEADER -->
+    <div class="admin-header d-flex flex-column flex-md-row align-items-center justify-content-between mb-4 p-3 rounded shadow-sm bg-white">
+
+        <div class="d-flex align-items-center mb-3 mb-md-0">
+
+            {% if admin_image %}
+                <img src="{{ url_for('static', filename='uploads/admin_profiles/' + admin_image) }}"
+                     class="me-3 rounded-circle"
+                     style="width:60px; height:60px; object-fit:cover;">
+            {% else %}
+                <div class="me-3 d-flex align-items-center justify-content-center rounded-circle bg-light"
+                     style="width:60px; height:60px;">
+                    👤
+                </div>
+            {% endif %}
+
+            <div>
+                <h5 class="mb-0">Hello, {{ admin_name or 'Admin' }} 👋</h5>
+                <small class="text-muted">Welcome back to your dashboard</small>
+            </div>
+
+        </div>
+
+        <div>
+            <a href="/user/products" class="btn btn-outline-secondary btn-sm">
+                View Store
+            </a>
+        </div>
+
+    </div>
+
+    <!-- STATS -->
+    <div class="row g-3 mb-4 text-center text-md-start">
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="shadow-sm p-3 rounded bg-white">
+                <h6 class="text-muted">Total Products</h6>
+                <h3>{{ total_products or 0 }}</h3>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="shadow-sm p-3 rounded bg-white">
+                <h6 class="text-muted">Orders</h6>
+                <h3>{{ total_orders or 0 }}</h3>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4 mx-sm-auto">
+            <div class="shadow-sm p-3 rounded bg-white">
+                <h6 class="text-muted">Users</h6>
+                <h3>{{ total_users or 0 }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RECENT ORDERS -->
+    <div class="bg-white p-3 p-md-4 rounded shadow-sm mb-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">🕒 Recent Orders</h6>
+            <a href="/admin/orders" class="btn btn-sm btn-light">View All</a>
+        </div>
+
+        {% if recent_orders and recent_orders|length > 0 %}
+
+            <div class="table-responsive">
+                <table class="table table-sm align-middle text-center text-md-start">
+
+                    <thead class="text-muted">
+                        <tr>
+                            <th>#</th>
+                            <th>User</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for order in recent_orders[:5] %}
+                        <tr>
+                            <td>#{{ order.order_id }}</td>
+                            <td>{{ order.username or 'User' }}</td>
+                            <td>₹{{ order.amount }}</td>
+                            <td>
+                                <span class="badge bg-success">
+                                    {{ order.order_status or 'Pending' }}
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+
+        {% else %}
+            <p class="text-muted text-center mb-0">No recent orders</p>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}

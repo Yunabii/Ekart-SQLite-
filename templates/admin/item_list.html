@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- TOP BAR -->
+    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+        <h3 class="mb-0">Products</h3>
+    </div>
+
+    <!-- FLASH -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <!-- ✅ COMBINED SEARCH + FILTER -->
+    <form method="GET" action="/admin/item-list">
+        <div class="row mb-4 g-2">
+
+            <!-- SEARCH -->
+            <div class="col-md-5">
+                <input type="text" name="search"
+                       class="form-control"
+                       placeholder="Search products..."
+                       value="{{ request.args.get('search','') }}">
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="col-md-4">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+
+                    {% for cat in categories %}
+                    <option value="{{ cat.category }}"
+                        {% if request.args.get('category') == cat.category %} selected {% endif %}>
+                        {{ cat.category }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- BUTTONS -->
+            <div class="col-md-3 d-flex gap-2">
+                <button class="btn btn-dark w-100">Apply</button>
+                <a href="/admin/item-list" class="btn btn-outline-secondary w-100">Reset</a>
+            </div>
+
+        </div>
+    </form>
+
+    <!-- TABLE OR NO PRODUCTS -->
+    {% if products %}
+    <div class="table-responsive">
+        <table class="table table-hover align-middle">
+
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th class="d-none d-md-table-cell">Category</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.product_id }}</td>
+
+                    <td>
+                        <img src="/static/uploads/product_images/{{ product.image }}"
+                             style="width:70px; height:70px; object-fit:cover; border-radius:8px;">
+                    </td>
+
+                    <td>{{ product.name }}</td>
+
+                    <td class="d-none d-md-table-cell">{{ product.category }}</td>
+
+                    <td>₹{{ product.price }}</td>
+
+                    <td>
+                        <div class="d-flex flex-wrap gap-1">
+                            <a href="/admin/view-item/{{ product.product_id }}" class="btn btn-sm btn-info">View</a>
+
+                            <a href="/admin/update-item/{{ product.product_id }}" class="btn btn-sm btn-warning">Update</a>
+
+                            <a href="/admin/delete-item/{{ product.product_id }}"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('Delete this product?')">
+                               Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+    {% else %}
+
+    <!-- ONLY ADDED THIS BLOCK -->
+    <div class="text-center py-5">
+        <h4 class="text-muted">😔 No products found</h4>
+        <a href="/admin/item-list" class="btn btn-outline-primary mt-2">
+            Browse Products
+        </a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <h3 class="text-center mb-4">User Login</h3>
+        <p class="text-center text-muted small">
+            Enter your email and password
+        </p>
+
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert alert-danger text-center py-2">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST" action="/user-login">
+
+            <!-- EMAIL -->
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control"
+                       placeholder="Enter Email" required>
+            </div>
+
+            <!-- PASSWORD -->
+            <div class="mb-3">
+                <input type="password" name="password" class="form-control"
+                       placeholder="Enter Password" required>
+            </div>
+
+            <!-- BUTTON -->
+            <button class="btn btn-dark w-100">Login</button>
+
+        </form>
+
+        <!-- LINKS -->
+        <div class="text-center mt-4 small-links">
+
+            <a href="/user-register">Create Account?</a>
+
+            <span class="divider">|</span>
+
+            <a href="/user-forgot-password">Forgot Password?</a>
+
+            <br>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- FLASH FIX -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show">
+              {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-3">📦 Order #{{ order.order_id }}</h4>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <small class="text-muted">Payment</small>
+                        <h6 class="mb-0">{{ order.payment_status }}</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <small class="text-muted">Total Amount</small>
+                        <h6 class="mb-0 text-success">₹{{ order.amount }}</h6>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3 bg-light rounded">
+                        <small class="text-muted">Order Status</small>
+                        <h6 class="mb-0" id="order-status">{{ order.order_status }}</h6>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- UPDATE STATUS -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body">
+
+            <h5 class="mb-3">🔄 Update Status</h5>
+
+            <form method="POST" action="/admin/update-order-status/{{ order.order_id }}">
+                <div class="row g-2 align-items-center">
+
+                    <div class="col-md-8">
+                        <select name="status" class="form-select">
+
+                            <option value="PLACED" {% if order.order_status == 'PLACED' %}selected{% endif %}>PLACED</option>
+                            <option value="PENDING" {% if order.order_status == 'PENDING' %}selected{% endif %}>PENDING</option>
+                            <option value="CONFIRMED" {% if order.order_status == 'CONFIRMED' %}selected{% endif %}>CONFIRMED</option>
+                            <option value="PACKED" {% if order.order_status == 'PACKED' %}selected{% endif %}>PACKED</option>
+                            <option value="SHIPPED" {% if order.order_status == 'SHIPPED' %}selected{% endif %}>SHIPPED</option>
+                            <option value="DELIVERED" {% if order.order_status == 'DELIVERED' %}selected{% endif %}>DELIVERED</option>
+
+                        </select>
+                    </div>
+
+                    <div class="col-md-4 d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            Update
+                        </button>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ITEMS -->
+    <div class="card shadow-sm border-0 rounded-4 mb-4">
+        <div class="card-body">
+
+            <h5 class="mb-3">🛍️ Order Items</h5>
+
+            {% if items %}
+            <div class="table-responsive">
+                <table class="table align-middle text-center text-md-start">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for it in items %}
+                        <tr>
+                            <td>{{ it.product_name }}</td>
+                            <td>{{ it.quantity }}</td>
+                            <td class="text-success fw-bold">₹{{ it.price }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+            {% else %}
+                <p class="text-muted text-center">No items found</p>
+            {% endif %}
+
+        </div>
+    </div>
+
+    <div class="text-center mb-4">
+        <a href="/admin/orders" class="btn btn-outline-secondary px-4">
+            ← Back to Orders
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

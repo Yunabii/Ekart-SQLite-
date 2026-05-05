@@ -1,0 +1,29 @@
+{% extends 'auth_base.html' %}
+
+{% block content %}
+<div class="login-card">
+
+    <h4 class="text-center mb-3">Create Account</h4>
+
+    {% for msg in get_flashed_messages() %}
+        <p class="text-danger text-center">{{ msg }}</p>
+    {% endfor %}
+
+    <form method="POST" action="/user-register">
+
+        <input type="text" name="name" class="form-control mb-3" placeholder="Full Name" required>
+
+        <input type="email" name="email" class="form-control mb-3" placeholder="Email" required>
+
+        <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
+
+        <button class="btn btn-dark w-100">Register</button>
+
+    </form>
+
+    <div class="text-center mt-3">
+        <a href="/user-login">Already have an account?</a>
+    </div>
+
+</div>
+{% endblock %}

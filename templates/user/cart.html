@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container py-3 py-md-4">
+
+    <h3 class="mb-4 fw-bold text-center text-md-start">🛒 Your Shopping Cart</h3>
+
+    {% if not cart %}
+
+    <div class="text-center p-4 p-md-5 bg-light rounded shadow-sm">
+        <h5>Your cart is empty</h5>
+        <a href="/user/products" class="btn btn-dark mt-3">
+            Continue Shopping
+        </a>
+    </div>
+
+    {% else %}
+
+    <div class="row g-4">
+
+        <!-- CART TABLE -->
+        <div class="col-12 col-lg-8">
+
+            <div class="bg-white p-3 p-md-4 rounded shadow-sm">
+
+                <div class="table-responsive">
+
+                    <table class="table align-middle table-sm table-md">
+
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th class="text-center">Price</th>
+                                <th class="text-center">Quantity</th>
+                                <th class="text-center">Delete</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for item in cart %}
+                            <tr>
+
+                                <!-- PRODUCT -->
+                                <td>
+                                    <div class="d-flex align-items-center gap-2 gap-md-3 flex-wrap">
+
+                                        <img src="/static/uploads/product_images/{{ item.image }}"
+                                             class="img-fluid rounded"
+                                             style="width:60px;height:60px;object-fit:cover;">
+
+                                        <div class="fw-semibold small">{{ item.name }}</div>
+
+                                    </div>
+                                </td>
+
+                                <!-- PRICE -->
+                                <td class="text-center small">
+                                    ₹{{ item.price }}
+                                </td>
+
+                                <!-- QUANTITY -->
+                                <td class="text-center">
+
+                                    <div class="d-inline-flex align-items-center border rounded">
+
+                                        <a href="{{ url_for('decrease_quantity', pid=item.pid) }}"
+                                           class="btn btn-sm px-2 px-md-3">-</a>
+
+                                        <span class="px-2 px-md-3 fw-bold small">
+                                            {{ item.quantity }}
+                                        </span>
+
+                                        <a href="{{ url_for('increase_quantity', pid=item.pid) }}"
+                                           class="btn btn-sm px-2 px-md-3">+</a>
+
+                                    </div>
+
+                                </td>
+
+                                <!-- REMOVE -->
+                                <td class="text-center">
+
+                                    <a href="{{ url_for('remove_from_cart', pid=item.pid) }}"
+                                       class="btn btn-danger btn-sm"
+                                       onclick="return confirm('Remove this item?')">
+                                        🗑
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <a href="/user/products"
+                   class="btn btn-outline-dark mt-3 w-100 w-md-auto">
+                    ← Continue Shopping
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- SUMMARY -->
+        <div class="col-12 col-lg-4">
+
+            <div class="bg-white p-3 p-md-4 rounded shadow-sm position-sticky"
+                 style="top:20px;">
+
+                <h5 class="mb-3 fw-bold text-center text-lg-start">
+                    Order Summary
+                </h5>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Items</span>
+                    <span>{{ cart|length }}</span>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal</span>
+                    <span>₹{{ grand_total }}</span>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between fw-bold fs-5">
+                    <span>Total</span>
+                    <span>₹{{ grand_total }}</span>
+                </div>
+
+                <a href="{{ url_for('checkout') }}"
+                   class="btn w-100 mt-3 text-white"
+                   style="background:cadetblue;">
+                    Proceed to Checkout
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
