@@ -171,18 +171,6 @@ SmartCart is fully responsive and optimized for:
 
 ---
 
-# 📸 SCREENSHOTS
-
-Add your project screenshots here after uploading images to GitHub.
-
-
-```md
-![Home Page]((![Uploading image.png…]()
-)
-)
-```
-
----
 
 # 🙌 FUTURE IMPROVEMENTS
 
