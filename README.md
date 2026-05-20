@@ -175,10 +175,10 @@ SmartCart is fully responsive and optimized for:
 
 Add your project screenshots here after uploading images to GitHub.
 
-Example:
 
 ```md
-![Home Page](("C:\Users\SARADHVI\Pictures\Screenshots\Screenshot (439).png")
+![Home Page]((![Uploading image.png…]()
+)
 )
 ```
 
