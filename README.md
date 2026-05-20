@@ -178,7 +178,8 @@ Add your project screenshots here after uploading images to GitHub.
 Example:
 
 ```md
-![Home Page](<img width="1920" height="1080" alt="Screenshot (439)" src="https://github.com/user-attachments/assets/c1fdf8ff-e631-4880-a876-2d6f75291b6f" />)
+![Home Page](("C:\Users\SARADHVI\Pictures\Screenshots\Screenshot (439).png")
+)
 ```
 
 ---
